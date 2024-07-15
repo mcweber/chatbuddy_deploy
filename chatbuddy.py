@@ -121,13 +121,13 @@ def main() -> None:
         if st.session_state.searchType == "rag":
             # Web Search ------------------------------------------------
             if st.session_state.webSearch == "tavily":
-                results = module.web_search_tavily(query=question, score=0.5, limit=10)
+                results = module.web_search_tavily(query=prompt, score=0.5, limit=10)
                 with st.expander("WEB Suchergebnisse"):
                     for result in results:
                         st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
                         web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\nText: {result['raw_content']}\n\n"
             else:
-                results = module.web_search_ddgs(query=question, limit=10)
+                results = module.web_search_ddgs(query=promt, limit=10)
                 with st.expander("WEB Suchergebnisse"):
                     for result in results:
                         st.write(f"{result['title']} [{result['href']}]")
