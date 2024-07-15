@@ -50,19 +50,15 @@ def ask_llm(llm: str, temperature: float = 0.2, question: str = "", history: lis
             systemPrompt: str = "", db_results_str: str = "", web_results_str: str = "") -> str:
     # define prompt
     datum_context = f" Heute ist der {str(datetime.now().date())}."
-    input_messages = [
-                {"role": "system", "content": systemPrompt + datum_context},
-                {"role": "user", "content": question},
-                # {"role": "assistant", "content": 'Hier sind einige relevante Informationen aus dem DVV Artikel-Archiv:\n'  + db_results_str},
-                # {"role": "user", "content": "Gibt es zusätzliche Informationen aus dem Internet?"},
-                # {"role": "assistant", "content": 'Hier sind einige relevante Informationen aus einer Internet-Recherche:\n'  + web_results_str},
-                # {"role": "user", "content": 'Basierend auf den oben genannten Informationen, ' + question}
-                ]
+    input_messages = \
+        [{"role": "system", "content": systemPrompt + datum_context}] \
+        + history \
+        + [{"role": "user", "content": question}]
     if llm == "openai_gpt-4o":
         response = openaiClient.chat.completions.create(
             model="gpt-4o",
             temperature=temperature,
-            messages = input_messages
+            messages=input_messages
             )
         output = response.choices[0].message.content
     elif llm == "anthropic":

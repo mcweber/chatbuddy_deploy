@@ -1,5 +1,5 @@
 # ---------------------------------------------------
-# Version: 14.07.2024
+# Version: 15.07.2024
 # Author: M. Weber
 # ---------------------------------------------------
 # 
@@ -32,13 +32,22 @@ def login_user_dialog() -> None:
             else:
                 st.error("Please fill in all fields.")
 
+def write_history() -> None:
+    for entry in st.session_state.history:
+        if entry["role"] == "user":
+            with st.chat_message("user"):
+                st.write(f"User: {entry['content']}")
+        elif entry["role"] == "assistant":
+            with st.chat_message("assistant"):
+                st.write(f"Assistant: {entry['content']}")
+
 # Main -----------------------------------------------------------------
 def main() -> None:
     st.set_page_config(page_title='chatbuddy', initial_sidebar_state="expanded")
     
     # Initialize Session State -----------------------------------------
     if 'userStatus' not in st.session_state:
-        st.session_state.history: list = {"role": "system", "content": user.get_systemprompt()}
+        st.session_state.history: list = []
         st.session_state.llmStatus: str = module.LLMS[0]
         st.session_state.marktbereich: str = "Alle"
         st.session_state.marktbereichIndex: int = 0
@@ -91,6 +100,9 @@ def main() -> None:
             st.rerun()
         st.divider()
         st.text_area("History", st.session_state.history, height=500)
+        if st.button("Clear History"):
+            st.session_state.history = [{"role": "system", "content": user.get_systemprompt()}]
+            st.rerun()
         st.divider()
         if st.button("Logout"):
             st.session_state.userStatus = False
@@ -101,7 +113,6 @@ def main() -> None:
     # Define Search Form ----------------------------------------------
     prompt = st.chat_input("Frage eingeben:")
     if prompt:
-        st.session_state.history.append({"role": "user", "content": prompt})
         st.session_state.searchStatus = True
 
     # Define Search & Search Results -------------------------------------------
@@ -127,14 +138,17 @@ def main() -> None:
             llm=st.session_state.llmStatus,
             temperature=0.2,
             question=prompt,
-            history=[],
+            history=st.session_state.history,
             systemPrompt=st.session_state.systemPrompt,
             # db_results_str="",
             web_results_str=web_results_str
             )
-        with st.chat_message("ChatBuddy"):
-            st.write(summary)
+        # with st.chat_message("assistant"):
+        #     # st.write(prompt)
+        #     st.write(summary)
+        st.session_state.history.append({"role": "user", "content": prompt})
         st.session_state.history.append({"role": "assistant", "content": summary})
+        write_history()
         st.session_state.searchStatus = False
 
 if __name__ == "__main__":
