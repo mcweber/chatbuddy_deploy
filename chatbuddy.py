@@ -120,19 +120,18 @@ def main() -> None:
     if st.session_state.userStatus and st.session_state.searchStatus:
         if st.session_state.searchType == "rag":
             # Web Search ------------------------------------------------
-            if st.session_state.rag_web_suche:
-                if st.session_state.webSearch == "tavily":
-                    results = module.web_search_tavily(query=question, score=0.5, limit=10)
-                    with st.expander("WEB Suchergebnisse"):
-                        for result in results:
-                            st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
-                            web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\nText: {result['raw_content']}\n\n"
-                else:
-                    results = module.web_search_ddgs(query=question, limit=10)
-                    with st.expander("WEB Suchergebnisse"):
-                        for result in results:
-                            st.write(f"{result['title']} [{result['href']}]")
-                            web_results_str += f"Titel: {result['title']}\nURL: {result['href']}\nText: {result['body']}\n\n"
+            if st.session_state.webSearch == "tavily":
+                results = module.web_search_tavily(query=question, score=0.5, limit=10)
+                with st.expander("WEB Suchergebnisse"):
+                    for result in results:
+                        st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
+                        web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\nText: {result['raw_content']}\n\n"
+            else:
+                results = module.web_search_ddgs(query=question, limit=10)
+                with st.expander("WEB Suchergebnisse"):
+                    for result in results:
+                        st.write(f"{result['title']} [{result['href']}]")
+                        web_results_str += f"Titel: {result['title']}\nURL: {result['href']}\nText: {result['body']}\n\n"
         # LLM Search ------------------------------------------------
         summary = module.ask_llm(
             llm=st.session_state.llmStatus,
