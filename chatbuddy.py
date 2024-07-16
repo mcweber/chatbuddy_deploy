@@ -1,5 +1,5 @@
 # ---------------------------------------------------
-# Version: 15.07.2024
+# Version: 16.07.2024
 # Author: M. Weber
 # ---------------------------------------------------
 # 
@@ -43,7 +43,7 @@ def write_history() -> None:
 
 # Main -----------------------------------------------------------------
 def main() -> None:
-    st.set_page_config(page_title='chatbuddy', initial_sidebar_state="expanded")
+    st.set_page_config(page_title='chatbuddy', initial_sidebar_state="collapsed")
     
     # Initialize Session State -----------------------------------------
     if 'userStatus' not in st.session_state:
@@ -70,7 +70,7 @@ def main() -> None:
     # Define Sidebar ---------------------------------------------------
     with st.sidebar:
         st.header("ChatBuddy")
-        st.caption("Version: 14.07.2024 Status: POC")
+        st.caption("Version: 16.07.2024 Status: POC")
         if st.session_state.userStatus:
             st.caption(f"Eingeloggt als: {st.session_state.userName}")
         else:

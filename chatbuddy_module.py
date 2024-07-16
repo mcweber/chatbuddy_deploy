@@ -1,5 +1,5 @@
 # ---------------------------------------------------
-# Version: 14.07.2024
+# Version: 16.07.2024
 # Author: M. Weber
 # ---------------------------------------------------
 # 
@@ -50,10 +50,17 @@ def ask_llm(llm: str, temperature: float = 0.2, question: str = "", history: lis
             systemPrompt: str = "", db_results_str: str = "", web_results_str: str = "") -> str:
     # define prompt
     datum_context = f" Heute ist der {str(datetime.now().date())}."
-    input_messages = \
-        [{"role": "system", "content": systemPrompt + datum_context}] \
-        + history \
-        + [{"role": "user", "content": question}]
+    web_results_prompt = [{"role": "assistant", "content": 'Hier sind einige relevante Informationen aus einer Internet-Recherche:\n'  + web_results_str}]
+    question_prompt = "Basierend auf den oben genannten Informationen, " if web_results_str != "" else ""
+    input_messages = [{"role": "system", "content": systemPrompt + datum_context}]
+    input_messages += history
+    input_messages += (web_results_prompt if web_results_str != "" else [])
+    input_messages += [{"role": "user", "content": question_prompt + question}]
+    
+    # input_messages = \
+    #     [{"role": "system", "content": systemPrompt + datum_context}] \
+    #     + history \
+    #     + [{"role": "user", "content": question}]
     if llm == "openai_gpt-4o":
         response = openaiClient.chat.completions.create(
             model="gpt-4o",
