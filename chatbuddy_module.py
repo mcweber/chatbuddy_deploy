@@ -2,7 +2,7 @@
 # Version: 16.07.2024
 # Author: M. Weber
 # ---------------------------------------------------
-# 
+# 21.07.2024 added gpt-4o-min
 # ---------------------------------------------------
 
 from datetime import datetime
@@ -25,7 +25,7 @@ import torch
 from transformers import BertTokenizer, BertModel
 
 # Define global variables ----------------------------------
-LLMS = ("openai_gpt-4o", "anthropic", "groq_mixtral-8x7b-32768", "groq_llama3-70b-8192", "groq_gemma-7b-it")
+LLMS = ("openai_gpt-4o-mini", "openai_gpt-4o", "anthropic", "groq_mixtral-8x7b-32768", "groq_llama3-70b-8192", "groq_gemma-7b-it")
 
 # Init MongoDB Client
 load_dotenv()
@@ -64,6 +64,13 @@ def ask_llm(llm: str, temperature: float = 0.2, question: str = "", history: lis
     if llm == "openai_gpt-4o":
         response = openaiClient.chat.completions.create(
             model="gpt-4o",
+            temperature=temperature,
+            messages=input_messages
+            )
+        output = response.choices[0].message.content
+    elif llm == "openai_gpt-4o-mini":
+        response = openaiClient.chat.completions.create(
+            model="gpt-4o-mini",
             temperature=temperature,
             messages=input_messages
             )
