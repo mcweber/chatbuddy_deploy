@@ -70,7 +70,7 @@ def main() -> None:
     # Define Sidebar ---------------------------------------------------
     with st.sidebar:
         st.header("ChatBuddy")
-        st.caption("Version: 16.07.2024 Status: POC")
+        st.caption("Version: 21.07.2024 Status: POC")
         if st.session_state.userStatus:
             st.caption(f"Eingeloggt als: {st.session_state.userName}")
         else:
