@@ -46,7 +46,12 @@ def main() -> None:
     st.set_page_config(page_title='chatbuddy', initial_sidebar_state="collapsed")
     
     # Initialize Session State -----------------------------------------
-    if 'userStatus' not in st.session_state:
+    if 'init' not in st.session_state:
+        # Check if System-Prompt exists
+        if user.get_systemprompt("") = {}:
+            temp_id = user.add_systemprompt("Du bist ein hilfreicher Assistent.")
+            st.warning(f"System-Prompt wurde erstellt: {temp_id}")
+        st.asession_state.init: bool = True
         st.session_state.history: list = []
         st.session_state.llmStatus: str = module.LLMS[0]
         st.session_state.marktbereich: str = "Alle"
