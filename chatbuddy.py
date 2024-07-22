@@ -1,5 +1,5 @@
 # ---------------------------------------------------
-# Version: 16.07.2024
+# Version: 22.07.2024
 # Author: M. Weber
 # ---------------------------------------------------
 # 
@@ -98,23 +98,17 @@ def main() -> None:
             st.session_state.webSearch = switch_webSearch
             st.rerun()
         st.divider()
-        switch_SystemPrompt = st.text_area("System-Prompt", st.session_state.systemPrompt, height=500)
+        switch_SystemPrompt = st.text_area("System-Prompt", st.session_state.systemPrompt, height=200)
         if switch_SystemPrompt != st.session_state.systemPrompt:
             st.session_state.systemPrompt = switch_SystemPrompt
             user.update_systemprompt(switch_SystemPrompt)
             st.rerun()
         st.divider()
-        st.text_area("History", st.session_state.history, height=500)
+        st.text_area("History", st.session_state.history, height=200)
         if st.button("Clear History"):
             st.session_state.history = [{"role": "system", "content": user.get_systemprompt()}]
             st.rerun()
-        st.divider()
-        if st.button("Logout"):
-            st.session_state.userStatus = False
-            st.session_state.searchStatus = False
-            st.session_state.userName = ""
-            st.rerun()
-
+        
     # Define Search Form ----------------------------------------------
     prompt = st.chat_input("Frage eingeben:")
     if prompt:
