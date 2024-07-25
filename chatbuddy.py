@@ -104,7 +104,7 @@ def main() -> None:
         web_results_str = ""
         if st.session_state.searchWeb:
             # Web Search ------------------------------------------------
-            results = module.web_search_tavily(query=prompt, score=0.5, limit=10)
+            results = module.web_search_tavily(query=prompt, score=0.5, limit=st.session_state.searchResultsLimit)
             with st.expander("WEB Suchergebnisse"):
                 for result in results:
                     st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
