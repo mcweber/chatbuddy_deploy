@@ -87,11 +87,6 @@ def main() -> None:
         if switch_search_results != st.session_state.searchResultsLimit:
             st.session_state.searchResultsLimit = switch_search_results
             st.rerun()
-        switch_webSearch = st.radio(label="Switch Web-Suche", options=("tavily", "DDGS"), index=0)
-        if switch_webSearch != st.session_state.webSearch:
-            st.session_state.webSearch = switch_webSearch
-            st.rerun()
-        st.divider()
         switch_SystemPrompt = st.text_area("System-Prompt", st.session_state.systemPrompt, height=200)
         if switch_SystemPrompt != st.session_state.systemPrompt:
             st.session_state.systemPrompt = switch_SystemPrompt
