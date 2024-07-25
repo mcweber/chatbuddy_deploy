@@ -125,8 +125,8 @@ def main() -> None:
                 with st.expander("WEB Suchergebnisse"):
                     for result in results:
                         st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
-                        web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\n\n"
-                        # web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\nText: {result['raw_content']}\n\n"
+                        # web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\n\n"
+                        web_results_str += f"[{len(result['raw_content'])}] Titel: {result['title']}\nURL: {result['url']}\nText: {result['raw_content']}\n\n"
             else:
                 results = module.web_search_ddgs(query=prompt, limit=10)
                 with st.expander("WEB Suchergebnisse"):
