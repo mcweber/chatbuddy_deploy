@@ -89,9 +89,10 @@ def main() -> None:
         if switch_search_results != st.session_state.searchResultsLimit:
             st.session_state.searchResultsLimit = switch_search_results
             st.rerun()
-        switch_llm = st.radio(label="Switch LLM", options=module.LLMS, index=0)
+        switch_llm = st.radio(label="Switch LLM", options=module.LLMS, index=1)
         if switch_llm != st.session_state.llmStatus:
             st.session_state.llmStatus = switch_llm
+            st.session_state.history = []
             st.rerun()
         switch_webSearch = st.radio(label="Switch Web-Suche", options=("tavily", "DDGS"), index=0)
         if switch_webSearch != st.session_state.webSearch:
@@ -106,7 +107,7 @@ def main() -> None:
         st.divider()
         st.text_area("History", st.session_state.history, height=200)
         if st.button("Clear History"):
-            st.session_state.history = [{"role": "system", "content": user.get_systemprompt()}]
+            st.session_state.history = []
             st.rerun()
         
     # Define Search Form ----------------------------------------------
