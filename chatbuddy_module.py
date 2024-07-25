@@ -121,7 +121,10 @@ def web_search_ddgs(query: str = "", limit: int = 10) -> list:
 
 def web_search_tavily(query: str = "", score: float = 0.5, limit: int = 10) -> list:
     results: list = []
-    results_list = tavilyClient.search(query=query, max_results=limit, include_raw_content=True)
+    try:
+        results_list = tavilyClient.search(query=query, max_results=limit, include_raw_content=True)
+    except:
+        return results
     for result in results_list['results']:
         if result['score'] > score:
             results.append(result)
