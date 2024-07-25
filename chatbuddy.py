@@ -116,16 +116,17 @@ def main() -> None:
         st.session_state.searchStatus = True
 
     # Define Search & Search Results -------------------------------------------
-    web_results_str = ""
     if st.session_state.userStatus and st.session_state.searchStatus:
         if st.session_state.searchType == "rag":
+            web_results_str = ""
             # Web Search ------------------------------------------------
             if st.session_state.webSearch == "tavily":
                 results = module.web_search_tavily(query=prompt, score=0.5, limit=10)
                 with st.expander("WEB Suchergebnisse"):
                     for result in results:
                         st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
-                        web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\nText: {result['raw_content']}\n\n"
+                        web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\n\n"
+                        # web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\nText: {result['raw_content']}\n\n"
             else:
                 results = module.web_search_ddgs(query=prompt, limit=10)
                 with st.expander("WEB Suchergebnisse"):
@@ -134,7 +135,7 @@ def main() -> None:
                         web_results_str += f"Titel: {result['title']}\nURL: {result['href']}\nText: {result['body']}\n\n"
         with st.expander("web_results_str"):
                 st.write(f"Injection Länge: {len(web_results_str)}")
-                st.write(web_results_str[:500])
+                st.write(web_results_str[:1500])
         # LLM Search ------------------------------------------------
         summary = module.ask_llm(
             llm=st.session_state.llmStatus,
