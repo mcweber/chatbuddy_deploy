@@ -1,5 +1,5 @@
 # ---------------------------------------------------
-# Version: 22.07.2024
+# Version: 25.07.2024
 # Author: M. Weber
 # ---------------------------------------------------
 # 
@@ -132,7 +132,7 @@ def main() -> None:
                         st.write(f"{result['title']} [{result['href']}]")
                         web_results_str += f"Titel: {result['title']}\nURL: {result['href']}\nText: {result['body']}\n\n"
         with st.expander("web_results_str"):
-                st.write(web_results_str)
+                st.write(web_results_str[:500])
         # LLM Search ------------------------------------------------
         summary = module.ask_llm(
             llm=st.session_state.llmStatus,
