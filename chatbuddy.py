@@ -57,7 +57,6 @@ def main() -> None:
         st.session_state.marktbereich: str = "Alle"
         st.session_state.marktbereichIndex: int = 0
         st.session_state.results: str = ""
-        # st.session_state.searchPref: str = "Artikel"
         st.session_state.searchResultsLimit:int  = 50
         st.session_state.searchStatus: bool = False
         st.session_state.searchType: str = "llm"
@@ -67,7 +66,6 @@ def main() -> None:
         st.session_state.userName: str = ""
         st.session_state.userRole: str = ""
         st.session_state.userStatus: bool = True
-        st.session_state.webSearch: str = "tavily" # tavily, DDGS
    
     # if st.session_state.userStatus == False:
     #     login_user_dialog()
@@ -88,11 +86,6 @@ def main() -> None:
         switch_search_results = st.slider("Search Results", 1, 100, st.session_state.searchResultsLimit)
         if switch_search_results != st.session_state.searchResultsLimit:
             st.session_state.searchResultsLimit = switch_search_results
-            st.rerun()
-        switch_llm = st.radio(label="Switch LLM", options=module.LLMS, index=1)
-        if switch_llm != st.session_state.llmStatus:
-            st.session_state.llmStatus = switch_llm
-            st.session_state.history = []
             st.rerun()
         switch_webSearch = st.radio(label="Switch Web-Suche", options=("tavily", "DDGS"), index=0)
         if switch_webSearch != st.session_state.webSearch:
@@ -120,19 +113,12 @@ def main() -> None:
         if st.session_state.searchType == "rag":
             web_results_str = ""
             # Web Search ------------------------------------------------
-            if st.session_state.webSearch == "tavily":
-                results = module.web_search_tavily(query=prompt, score=0.5, limit=10)
-                with st.expander("WEB Suchergebnisse"):
-                    for result in results:
-                        st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
-                        # web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\n\n"
-                        web_results_str += f"[{str(len(result['raw_content']))}] Titel: {result['title']}\nURL: {result['url']}\nText: {result['raw_content']}\n\n"
-            else:
-                results = module.web_search_ddgs(query=prompt, limit=10)
-                with st.expander("WEB Suchergebnisse"):
-                    for result in results:
-                        st.write(f"{result['title']} [{result['href']}]")
-                        web_results_str += f"Titel: {result['title']}\nURL: {result['href']}\nText: {result['body']}\n\n"
+            results = module.web_search_tavily(query=prompt, score=0.5, limit=10)
+            with st.expander("WEB Suchergebnisse"):
+                for result in results:
+                    st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
+                    # web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\n\n"
+                    web_results_str += f"[{str(len(result['raw_content']))}] Titel: {result['title']}\nURL: {result['url']}\nText: {result['content']}\n\n"
         with st.expander("web_results_str"):
                 st.write(f"Injection Länge: {len(web_results_str)}")
                 st.write(web_results_str[:1500])
