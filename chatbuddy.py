@@ -75,7 +75,7 @@ def main() -> None:
             st.caption(f"Eingeloggt als: {st.session_state.userName}")
         else:
             st.caption("Nicht eingeloggt.")
-        switch_searchWeb = st.checkbox(label="Auswahl Suchtyp", value=st.sessions_state.searchWeb)
+        switch_searchWeb = st.checkbox(label="Auswahl Suchtyp", value=st.session_state.searchWeb)
         if switch_searchWeb != st.session_state.searchWeb:
             st.session_state.searchWeb = switch_searchWeb
             st.rerun()
