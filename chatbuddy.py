@@ -113,7 +113,7 @@ def main() -> None:
                 for result in results:
                     st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
                     # web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\n\n"
-                    web_results_str += f"[{str(len(result['raw_content']))}] Titel: {result['title']}\nURL: {result['url']}\nText: {result['content']}\n\n"
+                    web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\nText: {result['content']}\n\n"
         # LLM Search ------------------------------------------------
         summary = module.ask_llm(
             llm=st.session_state.llmStatus,
