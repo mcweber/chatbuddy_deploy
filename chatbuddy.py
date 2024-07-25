@@ -105,8 +105,8 @@ def main() -> None:
 
     # Define Search & Search Results -------------------------------------------
     if st.session_state.userStatus and st.session_state.searchStatus:
+        web_results_str = ""
         if st.session_state.searchType == "rag":
-            web_results_str = ""
             # Web Search ------------------------------------------------
             results = module.web_search_tavily(query=prompt, score=0.5, limit=10)
             with st.expander("WEB Suchergebnisse"):
