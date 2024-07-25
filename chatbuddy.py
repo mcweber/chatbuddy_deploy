@@ -55,7 +55,7 @@ def main() -> None:
         st.session_state.marktbereich: str = "Alle"
         st.session_state.marktbereichIndex: int = 0
         st.session_state.results: str = ""
-        st.session_state.searchResultsLimit:int  = 50
+        st.session_state.searchResultsLimit:int  = 10
         st.session_state.searchStatus: bool = False
         st.session_state.searchWeb: bool = True
         st.session_state.showLatest: bool = False
@@ -79,7 +79,7 @@ def main() -> None:
         if switch_searchWeb != st.session_state.searchWeb:
             st.session_state.searchWeb = switch_searchWeb
             st.rerun()
-        switch_search_results = st.slider("Search Results", 1, 100, st.session_state.searchResultsLimit)
+        switch_search_results = st.slider("Search Results", 1, 50, st.session_state.searchResultsLimit)
         if switch_search_results != st.session_state.searchResultsLimit:
             st.session_state.searchResultsLimit = switch_search_results
             st.rerun()
