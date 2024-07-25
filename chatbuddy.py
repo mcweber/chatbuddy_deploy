@@ -71,7 +71,7 @@ def main() -> None:
     with st.sidebar:
         st.header("ChatBuddy")
         st.caption("Version: 25.07.2024 Status: POC/DEPLOY")
-        if st.session_state.userStatus:
+        if st.session_state.userStatus and st.session_state.userName:
             st.caption(f"Eingeloggt als: {st.session_state.userName}")
         else:
             st.caption("Nicht eingeloggt.")
