@@ -59,7 +59,7 @@ def main() -> None:
         st.session_state.results: str = ""
         st.session_state.searchResultsLimit:int  = 50
         st.session_state.searchStatus: bool = False
-        st.session_state.searchType: str = "llm"
+        st.session_state.searchType: str = "rag"
         st.session_state.searchTypeIndex: int  = SEARCH_TYPES.index(st.session_state.searchType)
         st.session_state.showLatest: bool = False
         st.session_state.systemPrompt: str = user.get_systemprompt()
@@ -73,7 +73,7 @@ def main() -> None:
     # Define Sidebar ---------------------------------------------------
     with st.sidebar:
         st.header("ChatBuddy")
-        st.caption("Version: 22.07.2024 Status: POC")
+        st.caption("Version: 25.07.2024 Status: POC/DEPLOY")
         if st.session_state.userStatus:
             st.caption(f"Eingeloggt als: {st.session_state.userName}")
         else:
