@@ -131,7 +131,7 @@ def main() -> None:
                     for result in results:
                         st.write(f"{result['title']} [{result['href']}]")
                         web_results_str += f"Titel: {result['title']}\nURL: {result['href']}\nText: {result['body']}\n\n"
-        with st.expander("web_results_str):
+        with st.expander("web_results_str"):
                 st.write(web_results_str)
         # LLM Search ------------------------------------------------
         summary = module.ask_llm(
