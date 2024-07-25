@@ -75,7 +75,7 @@ def main() -> None:
             st.caption(f"Eingeloggt als: {st.session_state.userName}")
         else:
             st.caption("Nicht eingeloggt.")
-        switch_searchWeb = st.checkbox(label="Auswahl Suchtyp", value=st.session_state.searchWeb)
+        switch_searchWeb = st.checkbox(label="Web-Suche", value=st.session_state.searchWeb)
         if switch_searchWeb != st.session_state.searchWeb:
             st.session_state.searchWeb = switch_searchWeb
             st.rerun()
@@ -102,7 +102,7 @@ def main() -> None:
     # Define Search & Search Results -------------------------------------------
     if st.session_state.userStatus and st.session_state.searchStatus:
         web_results_str = ""
-        if st.session_state.searchType == "rag":
+        if st.session_state.searchWeb:
             # Web Search ------------------------------------------------
             results = module.web_search_tavily(query=prompt, score=0.5, limit=10)
             with st.expander("WEB Suchergebnisse"):
