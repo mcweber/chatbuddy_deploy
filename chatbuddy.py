@@ -9,8 +9,6 @@ import streamlit as st
 import chatbuddy_module as module
 import chatbuddy_user as user
 
-SEARCH_TYPES = ("llm", "rag")
-
 # Functions -------------------------------------------------------------
 
 @st.experimental_dialog("Login User")
@@ -59,8 +57,7 @@ def main() -> None:
         st.session_state.results: str = ""
         st.session_state.searchResultsLimit:int  = 50
         st.session_state.searchStatus: bool = False
-        st.session_state.searchType: str = "rag"
-        st.session_state.searchTypeIndex: int  = SEARCH_TYPES.index(st.session_state.searchType)
+        st.session_state.searchWeb: bool = True
         st.session_state.showLatest: bool = False
         st.session_state.systemPrompt: str = user.get_systemprompt()
         st.session_state.userName: str = ""
@@ -78,10 +75,9 @@ def main() -> None:
             st.caption(f"Eingeloggt als: {st.session_state.userName}")
         else:
             st.caption("Nicht eingeloggt.")
-        switch_searchType = st.radio(label="Auswahl Suchtyp", options=SEARCH_TYPES, index=st.session_state.searchTypeIndex, horizontal=True)
-        if switch_searchType != st.session_state.searchType:
-            st.session_state.searchType = switch_searchType
-            st.session_state.searchTypeIndex = SEARCH_TYPES.index(switch_searchType)
+        switch_searchWeb = st.checkbox(label="Auswahl Suchtyp", value=st.sessions_state.searchWeb)
+        if switch_searchWeb != st.session_state.searchWeb:
+            st.session_state.searchWeb = switch_searchWeb
             st.rerun()
         switch_search_results = st.slider("Search Results", 1, 100, st.session_state.searchResultsLimit)
         if switch_search_results != st.session_state.searchResultsLimit:
