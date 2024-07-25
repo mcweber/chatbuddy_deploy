@@ -114,9 +114,6 @@ def main() -> None:
                     st.write(f"[{round(result['score'], 3)}] {result['title']} [{result['url']}]")
                     # web_results_str += f"Titel: {result['title']}\nURL: {result['url']}\n\n"
                     web_results_str += f"[{str(len(result['raw_content']))}] Titel: {result['title']}\nURL: {result['url']}\nText: {result['content']}\n\n"
-        with st.expander("web_results_str"):
-                st.write(f"Injection Länge: {str(len(web_results_str))}")
-                st.write(web_results_str[:1500])
         # LLM Search ------------------------------------------------
         summary = module.ask_llm(
             llm=st.session_state.llmStatus,
